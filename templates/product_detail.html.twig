@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Zdjęcie produktu -->
+        <div class="col-md-6">
+            <img src="{{ product.image }}" alt="{{ product.name }}" class="img-fluid rounded">
+        </div>
+
+        <!-- Szczegóły produktu -->
+        <div class="col-md-6">
+            <h2>{{ product.name }}</h2>
+            <p class="text-muted">{{ product.category.name }}</p>
+            <p class="lead">{{ product.price | number_format(2, ',', '.') }} PLN</p>
+
+            <p>{{ product.description }}</p>
+
+            <!-- Wyświetlenie specyfikacji -->
+            <div>
+                <h4>Specyfikacja</h4>
+                <ul>
+                    {% for key, value in product.specifications %}
+                        <li><strong>{{ key | capitalize }}:</strong> {{ value }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Formularz do wyboru ilości i dodania do koszyka -->
+            <form action="index.php?page=shop_view" method="POST" class="d-flex">
+                <div class="me-3">
+                    <label for="quantity" class="form-label">Ilość</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" max="100">
+                </div>
+
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <button type="submit" class="btn btn-primary align-self-end">Dodaj do koszyka</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{# header.html.twig #}
+<header class="bg-dark text-white p-3">
+    <div class="container d-flex justify-content-between">
+        <h1>Sklep Internetowy</h1>
+        <nav>
+            <a href="index.php" class="text-white me-3">Strona Główna</a>
+            <a href="index.php?page=cart" class="text-white me-3">Koszyk</a>
+            {% if zalogowany == true%}
+            <a href="index.php?page=logout" class="text-white me-3">Wyloguj się</a>
+            <span >Witaj {{ username }}</span>
+            {% else %}
+            <a href="index.php?page=login" class="text-white me-3">Zaloguj się</a>
+            {% endif %}
+
+        </nav>
+    </div>
+</header>

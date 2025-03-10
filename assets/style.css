@@ -1,0 +1,23 @@
+/* Kosmetyczne ustawienia dla przycisku */
+.btn-circle {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    background-color: #28a745; /* Zielony kolor przycisku */
+    position: fixed;
+    bottom: 70px; /* Zwiększamy o 70px, co daje ok. 2 szerokości koszyka */
+    right: 20px;
+    z-index: 999; /* Upewniamy się, że przycisk będzie na wierzchu */
+}
+
+/* Ustawienia dla licznika */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.3em 0.6em;
+    background-color: #343a40; /* Ciemne tło dla licznika */
+    color: white; /* Biały tekst */
+}
