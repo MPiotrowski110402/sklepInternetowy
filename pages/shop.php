@@ -8,6 +8,9 @@
         public function __construct(Database $db) {
             $this->db = $db;
         }
+
+
+        
         public function getAllProducts($count = 1){
             $count = max(1,$count);
             $limit = 9;
@@ -20,6 +23,9 @@
             return $query->fetchAll(PDO::FETCH_ASSOC);      
             
         }
+
+
+
         public function getProductByCategory($category, $count = 1) {
             if ($category == '') {
                 return $this->getAllProducts($count); 
@@ -39,6 +45,9 @@
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+
+
         public function getProductByPrice($price) {
             $query = $this->db->getConnection()->prepare(
                 "SELECT * FROM products WHERE price <= :price"
@@ -47,6 +56,9 @@
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+
+
         public function getProductsByFilters($category, $price, $count = 1) {
             $count = max(1, $count);
             $limit = 9;
@@ -68,7 +80,7 @@
             $sql .= " LIMIT :limit OFFSET :offset"; 
         
             $query = $this->db->getConnection()->prepare($sql);
-        
+
             if ($category !== '') {
                 $query->bindParam(':category', $category, PDO::PARAM_STR);
             }
@@ -77,17 +89,17 @@
             }
             $query->bindParam(':limit', $limit, PDO::PARAM_INT); 
             $query->bindParam(':offset', $offset, PDO::PARAM_INT);  
-        
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+
+
         public function getTotalProductsCount($category = '', $price = null) {
             $sql = "SELECT COUNT(*) FROM products p";
-        
             if ($category !== '') {
                 $sql .= " JOIN categories c ON p.category_id = c.id WHERE c.name = :category";
             }
-        
             if ($price !== null && $price !== '') {
                 if ($category !== '') {
                     $sql .= " AND p.price <= :price";
@@ -95,20 +107,19 @@
                     $sql .= " WHERE p.price <= :price";
                 }
             }
-        
             $query = $this->db->getConnection()->prepare($sql);
-        
             if ($category !== '') {
                 $query->bindParam(':category', $category, PDO::PARAM_STR);
             }
-        
             if ($price !== null && $price !== '') {
                 $query->bindParam(':price', $price, PDO::PARAM_INT);
             }
-        
             $query->execute();
             return $query->fetchColumn();
         }
+
+
+
         public function getProductById($id){
             $query = $this->db->getConnection()->prepare("SELECT * FROM products WHERE id =?");
             $query->execute([$id]);
@@ -118,6 +129,9 @@
             }
             return $product;
         }
+
+
+
         public function getProductBySearch($search){
             $query = $this->db->getConnection()->prepare("SELECT * FROM products WHERE name LIKE :search OR description LIKE :search OR specifications LIKE :search");
             $search = "%$search%"; 
@@ -125,6 +139,9 @@
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+
+
         public function getTotalProductsCountBySearch($search) {
             $query = $this->db->getConnection()->prepare("SELECT COUNT(*) FROM products WHERE name LIKE :search OR description LIKE :search OR specifications LIKE :search");
             $search = "%$search%"; 
@@ -132,6 +149,9 @@
             $query->execute();
             return $query->fetchColumn();
         }
+
+
+
         public function getProductBySort($sort){
             
             $orderBy = '';
@@ -156,7 +176,6 @@
             
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
-
     }
     class Cart {
         private $db;

@@ -20,6 +20,7 @@ if (!$product) {
     exit;
 }
 
+
 echo $twig->render('product_detail.html.twig', [
     'product' => $product,
     'zalogowany' => $zalogowany,

@@ -6,6 +6,8 @@
             $this->db = $db;
         }
 
+
+
         public function login($email, $password){
             $query = $this->db->getConnection()->prepare("SELECT * FROM users WHERE email =?");
             $query->execute([$email]);
@@ -22,6 +24,9 @@
     }
     $auth = new Auth($db);
 
+
+
+    
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $email = $_POST['email'];
         $password = $_POST['password'];
