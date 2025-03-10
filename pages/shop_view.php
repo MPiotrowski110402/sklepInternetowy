@@ -1,5 +1,6 @@
 <?php
 require_once 'shop.php';
+require_once 'category.php';
 if(!isset($_SESSION['username'])){
     $zalogowany = false;
     $username = '';
@@ -7,6 +8,7 @@ if(!isset($_SESSION['username'])){
 $db = new Database();
 $products = new Products($db);
 $cart = new Cart($db);
+$categoryList = new CategoryList($db);
 
 
 
@@ -47,6 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])){
     $productsList = $productsClass->getProductBySearch($search);
 
 }
+$category = $categoryList->getAllCategories();
 
 echo $twig->render('shop.html.twig', [
     'products' => $productsList,
@@ -56,6 +59,7 @@ echo $twig->render('shop.html.twig', [
     'currentCount' => $count, 
     'category' => $category,
     'price' => $price,
-    'cartCount' => $cartCount
+    'cartCount' => $cartCount,
+    'categories' => $category
 ]);
 ?>
