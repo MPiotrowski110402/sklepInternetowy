@@ -125,6 +125,37 @@
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+        public function getTotalProductsCountBySearch($search) {
+            $query = $this->db->getConnection()->prepare("SELECT COUNT(*) FROM products WHERE name LIKE :search OR description LIKE :search OR specifications LIKE :search");
+            $search = "%$search%"; 
+            $query->bindValue(':search', $search, PDO::PARAM_STR); 
+            $query->execute();
+            return $query->fetchColumn();
+        }
+        public function getProductBySort($sort){
+            
+            $orderBy = '';
+        
+            
+            switch ($sort) {
+                case 'price_desc':
+                    $orderBy = 'ORDER BY price DESC';
+                    break;
+                case 'price_asc':
+                default:
+                    $orderBy = 'ORDER BY price ASC';
+                    break;
+            }
+        
+            
+            $query = $this->db->getConnection()->prepare("SELECT * FROM products $orderBy");
+        
+            
+            $query->execute();
+        
+            
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
 
     }
     class Cart {

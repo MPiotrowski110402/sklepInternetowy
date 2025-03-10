@@ -15,7 +15,21 @@
                     <button type="submit" class="btn btn-primary mt-2 w-100">Szukaj</button>
                 </form>
             </div>
-            <div class="col-md-9 mb-9"></div>
+            <div class="col-md-9 mb-4">
+                <div class="alert alert-info d-flex justify-content-between align-items-center">
+                    <span><strong>Ilość ofert: {{ productsCount }}</strong></span>
+
+                    <!-- Formularz sortowania -->
+                    <form method="GET" action="" class="d-flex">
+                        <label for="sortBy" class="me-2 mb-0">Sortuj:</label>
+                        <select name="sortBy" id="sortBy" class="form-select">
+                            <option value="price_asc" {% if sortBy == 'price_asc' %}selected{% endif %}>Od najtańszej</option>
+                            <option value="price_desc" {% if sortBy == 'price_desc' %}selected{% endif %}>Od najdroższej</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary ms-2">Sortuj</button>
+                    </form>
+                </div>
+            </div>
 
             <!-- Sidebar z filtrami -->
             <aside class="col-md-3">
@@ -25,8 +39,8 @@
                         <label for="category">Kategoria</label>
                         <select id="category" name="category" class="form-control">
                             <option value="">Wszystkie</option>
-                            {% for category in categories %}
-                            <option value="{{category.name}}">{{category.name}}</option>
+                            {% for categoryList in categories%}
+                            <option value="{{categoryList.name}}">{{categoryList.name}}</option>
                             {% endfor %}
                         </select>
                     </div>
