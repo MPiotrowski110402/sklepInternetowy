@@ -6,78 +6,81 @@
     <div class="container mt-4">
         <div class="row">
             <!-- Pole wyszukiwania -->
-            <div class="col-md-3 mb-3">
-                <h4>Wyszukaj produkt</h4>
-                <form method="GET" action="">
+            <div class="col-md-3 mb-4">
+                <h4 class="text-primary fw-bold">Wyszukaj produkt</h4>
+                <form method="GET" action="" class="card p-3 shadow-sm rounded">
                     <div class="form-group">
-                        <input type="text" name="search" class="form-control" placeholder="Wpisz nazwę produktu" value="{{ search }}">
+                        <input type="text" name="search" class="form-control form-control-lg" placeholder="Wpisz nazwę produktu" value="{{ search }}">
                     </div>
-                    <button type="submit" class="btn btn-primary mt-2 w-100">Szukaj</button>
+                    <button type="submit" class="btn btn-primary mt-2 w-100 fs-5">Szukaj</button>
                 </form>
             </div>
+
             <div class="col-md-9 mb-4">
-                <div class="alert alert-info d-flex justify-content-between align-items-center">
-                    <span><strong>Ilość ofert: {{ productsCount }}</strong></span>
+                <div class="alert alert-info d-flex justify-content-between align-items-center shadow-sm">
+                    <span><strong>Ilość ofert: <span class="fw-bold">{{ productsCount }}</span></strong></span>
 
                     <!-- Formularz sortowania -->
                     <form method="GET" action="" class="d-flex">
-                        <label for="sortBy" class="me-2 mb-0">Sortuj:</label>
-                        <select name="sortBy" id="sortBy" class="form-select">
+                        <label for="sortBy" class="me-2 mb-0 fs-5 fw-bold">Sortuj:</label>
+                        <select name="sortBy" id="sortBy" class="form-select form-select-sm fs-5">
                             <option value="price_asc" {% if sortBy == 'price_asc' %}selected{% endif %}>Od najtańszej</option>
                             <option value="price_desc" {% if sortBy == 'price_desc' %}selected{% endif %}>Od najdroższej</option>
                         </select>
-                        <button type="submit" class="btn btn-primary ms-2">Sortuj</button>
+                        <button type="submit" class="btn btn-primary ms-2 btn-sm fs-5">Sortuj</button>
                     </form>
                 </div>
             </div>
 
             <!-- Sidebar z filtrami -->
             <aside class="col-md-3">
-                <h4>Filtry</h4>
-                <form method="GET" action="">
+                <h4 class="text-primary fw-bold">Filtry</h4>
+                <form method="GET" action="" class="card p-3 shadow-sm rounded">
                     <div class="form-group">
-                        <label for="category">Kategoria</label>
-                        <select id="category" name="category" class="form-control">
+                        <label for="category" class="fw-bold">Kategoria</label>
+                        <select id="category" name="category" class="form-control form-control-sm fs-5">
                             <option value="">Wszystkie</option>
-                            {% for categoryList in categories%}
-                            <option value="{{categoryList.name}}">{{categoryList.name}}</option>
+                            {% for categoryList in categories %}
+                                <option value="{{ categoryList.name }}" {% if category == categoryList.name %}selected{% endif %}>{{ categoryList.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group mt-2">
-                        <label for="price">Cena max</label>
-                        <input type="number" id="price" name="price" class="form-control" min="0" value="{{ price }}">
+                        <label for="price" class="fw-bold">Cena max</label>
+                        <input type="number" id="price" name="price" class="form-control form-control-sm fs-5" min="0" value="{{ price }}">
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3 w-100">Filtruj</button>
+                    <button type="submit" class="btn btn-primary mt-3 w-100 btn-sm fs-5">Filtruj</button>
                 </form>
             </aside>
 
-            
             <!-- Główna sekcja z produktami -->
             <section class="col-md-9">
                 <div class="row">
                     {% for product in products %}
                         <div class="col-md-4">
-                            <div class="card mb-4">
-                                <a href="index.php?page=product_detail&product_id={{product.id}}">
-                                {% if product.image is empty %}
-                                    <img src="assets/no-image.jpg" class="card-img-top" alt="es">
-                                {% else %}
-                                    <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
-                                {% endif %}
+                            <div class="card mb-4 shadow-lg rounded-3 overflow-hidden h-100">
+                                <a href="index.php?page=product_detail&product_id={{ product.id }}">
+                                    {% if product.image is empty %}
+                                        <img src="assets/no-image.jpg" class="card-img-top" alt="Brak obrazu">
+                                    {% else %}
+                                        <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                                    {% endif %}
+                                </a>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ product.name }}</h5>
-                                    </a>
-                                    <p class="card-text">{{ product.description }}</p>
-                                    <p class="card-text"><strong>{{ product.price }} PLN</strong></p>
+                                    <h5 class="card-title text-dark fw-bold">{{ product.name }}</h5>
+                                    <p class="card-text text-muted product-description">
+                                        {{ product.description }}
+                                    </p>
+                                    <p class="card-text"><strong class="fs-4 text-success">{{ product.price }} PLN</strong></p>
+
                                     <form method="POST" action="">
                                         <input type="hidden" name="product_id" value="{{ product.id }}">
                                         <div class="form-group">
-                                            <label for="quantity">Ilość:</label>
+                                            <label for="quantity" class="form-label fw-bold">Ilość:</label>
                                             <input type="number" name="quantity" class="form-control" value="1" min="1">
                                         </div>
-                                        <button type="submit" class="btn btn-success mt-2">Dodaj do koszyka</button>
+                                        <button type="submit" class="btn btn-success mt-2 w-100 btn-lg">Dodaj do koszyka</button>
                                     </form>
                                 </div>
                             </div>
@@ -85,40 +88,44 @@
                     {% else %}
                         <p>Brak produktów spełniających kryteria.</p>
                     {% endfor %}
-                <div class="d-flex justify-content-center my-4 align-items-center">
-                   <!-- Link do koszyka w prawym dolnym rogu -->
-                    <a href="index.php?page=cart" class="btn btn-success btn-circle position-fixed bottom-0 end-0 m-3">
-                        <i class="bi bi-cart-fill"></i> <!-- Ikonka koszyka -->
+
+
+                    <div class="d-flex justify-content-center my-4 align-items-center">
+                        <!-- Link do koszyka w prawym dolnym rogu -->
+                        <a href="index.php?page=cart" class="btn btn-success btn-circle position-fixed  end-0 m-3 shadow-sm fs-4">
+                            <i class="bi bi-cart-fill"></i> <!-- Ikonka koszyka -->
                             {% if cartCount > 0 %}
-                            <span class="badge rounded-pill bg-dark text-light position-absolute top-0 start-100 translate-middle">
-                                {{cartCount}}
+                                <span class="badge rounded-pill bg-dark text-light position-absolute top-0 start-100 translate-middle fs-6">
+                                    {{ cartCount }}
+                                </span>
+                            {% endif %}
+                        </a>
+
+                        <!-- Przycisk "Poprzednia" -->
+                        {% if currentCount > 1 %}
+                            <a href="?page=shop_view&category={{ category }}&price={{ price }}&count={{ currentCount - 1 }}" class="btn btn-primary btn-lg">
+                                <i class="bi bi-arrow-left"></i> <!-- Strzałka w lewo -->
+                            </a>
+                        {% else %}
+                            <span class="btn btn-secondary disabled btn-lg">
+                                <i class="bi bi-arrow-left"></i> <!-- Strzałka w lewo -->
                             </span>
-                            {%endif %}
-                    </a>
-                    <!-- Przycisk "Poprzednia" -->
-                    {% if currentCount > 1 %}
-                        <a href="?page=shop_view&category={{ category }}&price={{ price }}&count={{ currentCount - 1 }}" class="btn btn-primary">
-                            <i class="bi bi-arrow-left"></i> <!-- Strzałka w lewo -->
-                        </a>
-                    {% else %}
-                        <span class="btn btn-secondary disabled">
-                            <i class="bi bi-arrow-left"></i> <!-- Strzałka w lewo -->
-                        </span>
-                    {% endif %}
+                        {% endif %}
 
-                    <!-- Wyświetlanie bieżącej strony i całkowitej liczby stron -->
-                    <span class="mx-3">Strona {{ currentCount }} z {{ totalPages }}</span>
+                        <!-- Wyświetlanie bieżącej strony i całkowitej liczby stron -->
+                        <span class="mx-3 fs-5 text-dark fw-bold">Strona {{ currentCount }} z {{ totalPages }}</span>
 
-                    <!-- Przycisk "Następna" -->
-                    {% if currentCount < totalPages %}
-                        <a href="?page=shop_view&category={{ category }}&price={{ price }}&count={{ currentCount + 1 }}" class="btn btn-primary ms-3">
-                            <i class="bi bi-arrow-right"></i> <!-- Strzałka w prawo -->
-                        </a>
-                    {% else %}
-                        <span class="btn btn-secondary disabled ms-3">
-                            <i class="bi bi-arrow-right"></i> <!-- Strzałka w prawo -->
-                        </span>
-                    {% endif %}
+                        <!-- Przycisk "Następna" -->
+                        {% if currentCount < totalPages %}
+                            <a href="?page=shop_view&category={{ category }}&price={{ price }}&count={{ currentCount + 1 }}" class="btn btn-primary ms-3 btn-lg">
+                                <i class="bi bi-arrow-right"></i> <!-- Strzałka w prawo -->
+                            </a>
+                        {% else %}
+                            <span class="btn btn-secondary disabled ms-3 btn-lg">
+                                <i class="bi bi-arrow-right"></i> <!-- Strzałka w prawo -->
+                            </span>
+                        {% endif %}
+                    </div>
                 </div>
             </section>
         </div>

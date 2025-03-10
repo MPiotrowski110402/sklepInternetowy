@@ -9,7 +9,7 @@
     font-size: 1.5rem;
     background-color: #28a745; /* Zielony kolor przycisku */
     position: fixed;
-    bottom: 70px; /* Zwiększamy o 70px, co daje ok. 2 szerokości koszyka */
+    bottom: 80px; /* Zmienia wysokość przycisku na 20px + wysokość stopki (przykład) */
     right: 20px;
     z-index: 999; /* Upewniamy się, że przycisk będzie na wierzchu */
 }
@@ -21,3 +21,46 @@
     background-color: #343a40; /* Ciemne tło dla licznika */
     color: white; /* Biały tekst */
 }
+
+/* Efekt po najechaniu na przyciski */
+.hover-menu:hover {
+    background-color: #ffc107;
+    color: #fff;
+    transform: scale(1.1);  /* Lekko powiększa przycisk */
+    transition: all 0.3s ease;  /* Płynna animacja */
+}
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px; /* Dodaje odstęp między kartami w pionie */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Unosi kartę przy najechaniu */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Dodaje cień */
+}
+
+.card-body {
+    padding: 1.5rem; /* Większa przestrzeń wewnętrzna */
+}
+
+.product-description {
+    max-height: 3.6em; /* Ogranicza wysokość opisu */
+    overflow: hidden; /* Ukrywa tekst, który wykracza poza ograniczenia */
+    text-overflow: ellipsis; /* Dodaje trzy kropki na końcu, gdy tekst jest za długi */
+    white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+}
+
+.card-img-top {
+    height: 200px; /* Stała wysokość dla obrazków */
+    object-fit: cover; /* Przycinanie obrazu, by zachować proporcje */
+}
+
+.btn {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #28a745; /* Zmiana koloru przycisku na jaśniejszy */
+    transform: scale(1.05); /* Lekkie powiększenie przycisku przy najechaniu */
+}
+
